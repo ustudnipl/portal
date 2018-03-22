@@ -46,6 +46,7 @@
                 <argument>--prod</argument>
                 <argument>--aot=true</argument>
                 <argument>--build-optimizer=true</argument>
+                <argument>--no-progress</argument>
               </arguments>
             </configuration>
             <goals>
