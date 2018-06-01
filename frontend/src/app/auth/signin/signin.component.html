@@ -1,0 +1,30 @@
+<section class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>Logowanie</h2>
+
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" class="form-control" ngModel>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Hasło:</label>
+          <input id="password" name="password" type="text" class="form-control" ngModel>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zaloguj się</button>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <p>Nie masz konta? <a routerLink="/signup">Zarejestruj się!</a></p>
+    </div>
+  </div>
+</section>
