@@ -1,6 +1,13 @@
 <div class="container">
 
-  <form>
+  <div class="row justify-content-center">
+    <div class="col-2">
+      <h2>Rejestracja</h2>
+      <br>
+    </div>
+  </div>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
     <div class="row justify-content-center">
 
@@ -10,8 +17,18 @@
           <input class="form-control"
                  type="text"
                  id="firstnameInput"
-                 name="firstname"
+                 formControlName="username"
                  placeholder="podaj swoje imię">
+
+          <div *ngIf="username.errors && username.invalid && (username.dirty || username.touched)"
+               class="invalid-feedback">
+            <div *ngIf="username.errors.required">
+              Imię jest wymagane.
+            </div>
+            <div *ngIf="username.errors.pattern">
+              Imię powinno mieć od 2 do 16 liter.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -20,10 +37,11 @@
           <label for="genderSelect">Płeć:</label>
           <select class="form-control"
                   id="genderSelect"
-                  name="gender">
+                  formControlName="gender">
             <option value="" disabled selected>wybierz</option>
-            <option value="FEMALE">Kobieta</option>
-            <option value="MALE">Mężczyzna</option>
+            <option *ngFor="let genderOption of genderOptions"
+                    [value]="genderOption.value">{{genderOption.text}}
+            </option>
           </select>
         </div>
       </div>
@@ -37,10 +55,11 @@
           <label for="birthyearSelect">Rok urodzenia:</label>
           <select class="form-control"
                   id="birthyearSelect"
-                  name="birthyear">
+                  formControlName="birthyear">
             <option value="" disabled selected>wybierz</option>
-            <option value="2000">2000</option>
-            <option value="2001">2001</option>
+            <option *ngFor="let birthyearOption of birthyearOptions"
+                    [value]="birthyearOption">{{birthyearOption}}
+            </option>
           </select>
         </div>
       </div>
@@ -50,17 +69,18 @@
           <label for="birthmonthSelect">Miesiąc urodzenia:</label>
           <select class="form-control"
                   id="birthmonthSelect"
-                  name="birthmonth">
+                  formControlName="birthmonth">
             <option value="" disabled selected>wybierz</option>
-            <option value="1">Styczeń</option>
-            <option value="2">Luty</option>
+            <option *ngFor="let birthmonthOption of birthmonthOptions"
+                    [value]="birthmonthOption.value">{{birthmonthOption.text}}
+            </option>
           </select>
         </div>
       </div>
 
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" formGroupName="emailGroup">
 
       <div class="col-4">
         <div class="form-group">
@@ -68,8 +88,17 @@
           <input class="form-control"
                  type="text"
                  id="emailInput"
-                 name="email"
+                 formControlName="email"
                  placeholder="podaj adres e-mail">
+          <div *ngIf="email.errors && email.invalid && (email.dirty || email.touched)"
+               class="invalid-feedback">
+            <div *ngIf="email.errors.required">
+              Adres e-mail jest wymagany.
+            </div>
+            <div *ngIf="email.errors.email">
+              Podaj poprawny adres e-mail.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -79,15 +108,26 @@
           <input class="form-control"
                  type="text"
                  id="emailRepeatedInput"
-                 name="emailRepeated"
+                 formControlName="emailRepeated"
                  placeholder="powtórz adres e-mail">
+
+          <div *ngIf="emailRepeated.errors && emailRepeated.invalid
+                    && (emailRepeated.dirty || emailRepeated.touched)"
+               class="invalid-feedback">
+            <div *ngIf="emailRepeated.errors.required">
+              Powtórz adres e-mail.
+            </div>
+            <div *ngIf="emailRepeated.errors.emailConfirm">
+              Adresy e-mail nie zgadzają się.
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
 
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" formGroupName="passwordGroup">
 
       <div class="col-4">
         <div class="form-group">
@@ -95,8 +135,19 @@
           <input class="form-control"
                  type="password"
                  id="passwordInput"
-                 name="password"
+                 formControlName="password"
                  placeholder="podaj hasło">
+          <div *ngIf="password.errors && password.invalid
+                    && (password.dirty || password.touched)"
+               class="invalid-feedback">
+            <div *ngIf="password.errors.required">
+              Hasło jest wymagane.
+            </div>
+            <div *ngIf="password.errors && !password.errors.required">
+              Hasło musi składać się z przynajmniej 8 znaków,
+              w tym z min. 1 cyfry i min. 1 wielkiej litery.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -106,13 +157,22 @@
           <input class="form-control"
                  type="password"
                  id="passwordRepeatedInput"
-                 name="passwordRepeated"
+                 formControlName="passwordRepeated"
                  placeholder="powtórz hasło">
+          <div *ngIf="passwordRepeated.errors && passwordRepeated.invalid
+                    && (passwordRepeated.dirty || passwordRepeated.touched)"
+               class="invalid-feedback">
+            <div *ngIf="passwordRepeated.errors.required">
+              Powtórz hasło aby potwierdzić.
+            </div>
+            <div *ngIf="passwordRepeated.errors.passwordConfirm">
+              Hasła nie zgadzają się.
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
-
 
     <div class="row justify-content-center">
 
@@ -122,11 +182,18 @@
             <input class="form-check-input"
                    type="checkbox"
                    id="acceptRegulationsCheck"
-                   name="acceptRegulations"
+                   formControlName="acceptRegulations"
                    value="">
             <label class="form-check-label" for="acceptRegulationsCheck">
               Potwierdzam zapoznanie się z Regulaminem i akceptuję go
             </label>
+            <div *ngIf="acceptRegulations.errors && acceptRegulations.invalid
+                    && (acceptRegulations.dirty || acceptRegulations.touched)"
+                 class="invalid-feedback">
+              <div *ngIf="acceptRegulations.errors.required">
+                Aby się zarejestrować, musisz zaakceptować regulamin.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -138,15 +205,34 @@
             <input class="form-check-input"
                    type="checkbox"
                    id="claimPersonalDataCheck"
-                   name="claimPersonalData"
+                   formControlName="claimPersonalData"
                    value="">
             <label class="form-check-label" for="claimPersonalDataCheck">
               Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z...
             </label>
+            <div *ngIf="claimPersonalData.errors && claimPersonalData.invalid
+                    && (claimPersonalData.dirty || claimPersonalData.touched)"
+                 class="invalid-feedback">
+              <div *ngIf="claimPersonalData.errors.required">
+                Aby się zarejestrować, musisz zgodzić się na przetwarzanie danych osobowych.
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+    </div>
+
+
+    <div class="row justify-content-center">
+      <div class="col-2">
+        <button class="btn btn-primary"
+                type="submit"
+                [disabled]="!registerForm.valid">
+          Zarejestruj się
+        </button>
+        <br>
+      </div>
     </div>
 
   </form>

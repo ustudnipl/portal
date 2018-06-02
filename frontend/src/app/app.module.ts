@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from '@angular/forms';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -17,6 +18,7 @@ import * as fromApp from './store/app.reducers';
 // import {AuthEffects} from './auth/store/auth.effects';
 import { RegisterComponent } from './register/register.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +26,7 @@ import { RegisterComponent } from './register/register.component';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     CoreModule,
     // AuthModule,
