@@ -1,0 +1,14 @@
+// src/sass/styles.scss
+
+@import './variables';
+@import './mixins';
+
+.ng-touched.ng-invalid {
+  @extend .is-invalid;
+}
+
+.ng-touched.ng-valid {
+  @extend .is-valid;
+}
+
+@import '../../node_modules/bootstrap/scss/bootstrap';

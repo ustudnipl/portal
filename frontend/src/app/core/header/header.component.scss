@@ -1,0 +1,28 @@
+@import '../../../sass/variables';
+@import '../../../../node_modules/lato-font/scss/public-api';
+
+$lato-font-path: '../../../../node_modules/lato-font/fonts';
+
+@include lato-include-font('black');
+@include lato-include-font('thin');
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: $primary;
+  color: white;
+  height: 200px;
+
+  margin-bottom: 20px;
+
+  h1 {
+    @include lato-font('black');
+  }
+
+  h5 {
+    @include lato-font('thin');
+  }
+}
+
