@@ -14,7 +14,6 @@
 
   <build>
     <plugins>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -39,9 +38,11 @@
             <id>exec-npm-ng-build</id>
             <phase>generate-sources</phase>
             <configuration>
-              <executable>./node_modules/@angular/cli/bin/ng</executable>
+              <executable>npm</executable>
               <workingDirectory>${pom.basedir}</workingDirectory>
               <arguments>
+                <argument>run</argument>
+                <argument>ng</argument>
                 <argument>build</argument>
                 <argument>--prod</argument>
                 <argument>--aot=true</argument>
