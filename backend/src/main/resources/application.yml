@@ -3,4 +3,9 @@ spring:
     url: ${db.url:jdbc:postgresql://localhost:5432/postgres}
     username: ${db.username:postgres}
     password: ${db.password:postgres}
-  jpa.hibernate.ddl-auto: validate
+  jpa:
+    hibernate.ddl-auto: validate
+
+jwt:
+  secret: SECRET
+  expiration-time: 3600000
