@@ -2,8 +2,7 @@ package pl.ustudni.portal;
 
 import java.util.UUID;
 
-public
-class Message {
+public class Message {
     private String id = UUID.randomUUID().toString();
     private String content;
 
