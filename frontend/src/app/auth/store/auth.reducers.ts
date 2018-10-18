@@ -11,7 +11,6 @@ const initialState: State = {
 };
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
-
   switch (action.type) {
     case AuthActions.SIGNIN_SUCCESS:
       return {
@@ -19,12 +18,14 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         authenticated: true
       };
     case AuthActions.LOGOUT:
+    case AuthActions.SIGNIN_FAILURE:
       return {
         ...state,
         token: null,
         authenticated: false
       };
     case AuthActions.SET_TOKEN:
+      localStorage["token"] = action.payload;
       return {
         ...state,
         token: action.payload,

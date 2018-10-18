@@ -32,7 +32,7 @@ export class SigninSuccess implements Action {
 }
 
 export class SigninFailure implements Action {
-  readonly type = SIGNIN_SUCCESS;
+  readonly type = SIGNIN_FAILURE;
 }
 
 
