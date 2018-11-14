@@ -1,7 +1,9 @@
 package pl.ustudni.portal.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @ConfigurationProperties(prefix = "jwt")
@@ -26,4 +28,8 @@ public class JwtProperties {
         this.secret = secret;
     }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
