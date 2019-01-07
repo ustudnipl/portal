@@ -6,17 +6,16 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/mergeMap';
 
-import {fromPromise} from 'rxjs/observable/fromPromise';
-import {Router} from '@angular/router';
 import {SigninCredentials} from "../login-input.model";
-import {Observable} from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import {Observer} from 'rxjs/Observer';
 import {AuthService} from "../auth.service";
-import {SetToken, SigninSuccess} from "./auth.actions";
+import {catchError, mergeMap} from "rxjs/operators";
 
 @Injectable()
 export class AuthEffects {
+
+  constructor(private actions$: Actions,
+              private authService: AuthService) {
+  }
 
   @Effect()
   authSignin = this.actions$
@@ -24,19 +23,19 @@ export class AuthEffects {
     .map((action: AuthActions.Signin) => action.payload as SigninCredentials)
     .switchMap(credentials =>
       this.authService.signin(credentials)
-    )
-    .mergeMap((token: string) => {
-      this.router.navigate(['/']);
-      return [
-        new AuthActions.SigninSuccess(),
-        new AuthActions.SetToken(token)
-      ];
-    })
-  ;
+        .pipe(
+          mergeMap((token: string) => {
+            return [
+              new AuthActions.SigninSuccess(),
+              new AuthActions.SetToken(token)
+            ];
+          }),
+          catchError((error: string) => {
+            return [
+              new AuthActions.SigninFailure()
+            ];
+          })
+      )
+    );
 
-  constructor(private actions$: Actions,
-              private router: Router,
-              private authService: AuthService) {
-  }
 }
-

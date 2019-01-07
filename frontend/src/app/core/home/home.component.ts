@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Store} from "@ngrx/store";
+import * as fromApp from "../../store/app.reducers";
 
 @Component({
   selector: 'app-home',
@@ -8,12 +9,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
-  }
+  constructor(private store: Store<fromApp.AppState>) { }
+
+  appState: fromApp.AppState;
 
   ngOnInit() {
-    this.router.navigate(['/register']);
+    this.store.take(1).subscribe(s => this.appState = s);
   }
 
 }
