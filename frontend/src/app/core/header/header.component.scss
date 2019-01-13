@@ -24,5 +24,20 @@ header {
   h5 {
     @include lato-font('thin');
   }
-}
 
+  ul {
+    margin-top: 20px;
+
+    li a {
+      color: white;
+    }
+
+    li:after {
+      content: "\00a0|\00a0";
+    }
+
+    li:last-child:after {
+      content: "";
+    }
+  }
+}
