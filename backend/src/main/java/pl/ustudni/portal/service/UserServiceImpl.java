@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private VerificationTokenService verificationTokenService;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -53,10 +56,12 @@ public class UserServiceImpl implements UserService {
         user.setLatitude(userDto.getLatitude());
         user.setLongitude(userDto.getLongitude());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        user.setActive(true);
+        user.setActive(false);
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
+
+        verificationTokenService.createVerification(user.getEmail());
     }
 
     private String getClientIP() {

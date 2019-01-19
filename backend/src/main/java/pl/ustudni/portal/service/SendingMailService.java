@@ -1,5 +1,7 @@
 package pl.ustudni.portal.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,15 +15,10 @@ import org.thymeleaf.context.Context;
 
 @Service
 public class SendingMailService {
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+    Logger logger = LoggerFactory.getLogger(SendingMailService.class);
 
-        return mailSender;
-    }
-
-    @Autowired
-    private JavaMailSender mailSender;
+    //@Autowired
+    //private JavaMailSender mailSender;
 
     @Autowired
     private TemplateEngine templateEngine;
@@ -36,6 +33,8 @@ public class SendingMailService {
         message.setTo(toEmail);
         message.setSubject("verification");
         message.setText(body);
-        mailSender.send(message);
+        //mailSender.send(message);
+
+        logger.info("sending mail:\n" + body);
     }
 }
