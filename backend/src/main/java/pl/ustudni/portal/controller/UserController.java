@@ -11,6 +11,7 @@ import pl.ustudni.portal.dto.UserDto;
 import pl.ustudni.portal.exception.UserAlreadyExistsException;
 import pl.ustudni.portal.model.User;
 import pl.ustudni.portal.service.UserService;
+import pl.ustudni.portal.service.VerificationTokenService;
 
 import javax.validation.Valid;
 
@@ -21,10 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable int id) {
-        return new UserDto();
-    }
+    @Autowired
+    private VerificationTokenService verificationTokenService;
 
     @GetMapping("/me")
     public ResponseEntity getMyself() {
@@ -46,5 +45,17 @@ public class UserController {
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    @GetMapping("/verify/{token}")
+    public ResponseEntity confirmRegistration(@PathVariable final String token) {
+        verificationTokenService.verifyEmail(token);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
+
+
 
 }

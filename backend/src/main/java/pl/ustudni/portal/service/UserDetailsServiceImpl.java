@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //authorities.stream().map(x -> x.getAuthority()).forEach(x -> System.out.println(x));
 
 
-        return new User(user.getEmail(), user.getPassword(), user.getActive(), true, true, true, authorities);
+        return new User(user.getEmail(), user.getPassword(), user.isActive(), true, true, true, authorities);
     }
 
     private List<GrantedAuthority> getAuthorities(Set<Role> roles) {

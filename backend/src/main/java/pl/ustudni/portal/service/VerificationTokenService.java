@@ -2,10 +2,11 @@ package pl.ustudni.portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.ustudni.portal.dao.UserRepository;
 import pl.ustudni.portal.dao.VerificationTokenRepository;
+import pl.ustudni.portal.exception.TokenExpiredException;
+import pl.ustudni.portal.exception.TokenInvalidException;
 import pl.ustudni.portal.exception.UserNotFoundException;
 import pl.ustudni.portal.model.User;
 import pl.ustudni.portal.model.VerificationToken;
@@ -49,22 +50,20 @@ public class VerificationTokenService {
         sendingMailService.sendVerificationMail(email, verificationToken.getToken());
     }
 
-    public ResponseEntity<String> verifyEmail(String token){
+    public void verifyEmail(String token) {
         List<VerificationToken> verificationTokens = verificationTokenRepository.findByToken(token);
-        if (verificationTokens.isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid token.");
-        }
+
+        if (verificationTokens.isEmpty())
+            throw new TokenInvalidException();
 
         VerificationToken verificationToken = verificationTokens.get(0);
-        if (verificationToken.getExpiredDateTime().isBefore(LocalDateTime.now())) {
-            return ResponseEntity.unprocessableEntity().body("Expired token.");
-        }
+
+        if (verificationToken.hasExpired())
+            throw new TokenExpiredException();
 
         verificationToken.setConfirmedDateTime(LocalDateTime.now());
         verificationToken.setStatus(VerificationToken.STATUS_VERIFIED);
         verificationToken.getUser().setActive(true);
         verificationTokenRepository.save(verificationToken);
-
-        return ResponseEntity.ok("You have successfully verified your email address.");
     }
 }

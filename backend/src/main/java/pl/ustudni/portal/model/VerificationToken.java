@@ -9,6 +9,8 @@ public class VerificationToken {
     public static final String STATUS_PENDING = "PENDING";
     public static final String STATUS_VERIFIED = "VERIFIED";
 
+    private static final int EXPIRATION_HOURS = 24;
+
     private Long id;
     private String token;
     private String status;
@@ -17,10 +19,10 @@ public class VerificationToken {
     private LocalDateTime confirmedDateTime;
     private User user;
 
-    public VerificationToken(){
+    public VerificationToken() {
         this.token = UUID.randomUUID().toString();
         this.issuedDateTime = LocalDateTime.now();
-        this.expiredDateTime = this.issuedDateTime.plusDays(1);
+        this.expiredDateTime = this.issuedDateTime.plusHours(EXPIRATION_HOURS);
         this.status = STATUS_PENDING;
     }
 
@@ -56,6 +58,10 @@ public class VerificationToken {
 
     public void setExpiredDateTime(LocalDateTime expiredDateTime) {
         this.expiredDateTime = expiredDateTime;
+    }
+
+    public boolean hasExpired() {
+        return LocalDateTime.now().isAfter(expiredDateTime);
     }
 
     public LocalDateTime getIssuedDateTime() {

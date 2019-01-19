@@ -9,6 +9,19 @@ spring:
     properties.hibernate.jdbc.lob.non_contextual_creation: true
     properties.hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate.ddl-auto: create
+  mail:
+    smtp.host:
+    smtp.port:
+    smtp.username:
+    smtp.password:
+    from:
+    from-name:
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+
+    verificationapi: http://localhost/verify-email?code=
+
 jwt:
   secret: SECRET
   expiration-time: 3600000
