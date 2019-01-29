@@ -2,4 +2,10 @@
   <h1>uStudni.pl</h1>
   <h5>28-dniowa modlitwa</h5>
   <h5>o dobrego współmałżonka</h5>
+  <ul class="nav navbar-default">
+    <li *ngIf="appState.auth.authenticated"><a routerLink="/">Strona główna</a></li>
+    <li *ngIf="!appState.auth.authenticated"><a routerLink="/signin">Logowanie</a></li>
+    <li *ngIf="!appState.auth.authenticated"><a routerLink="/signup">Rejestracja</a></li>
+  </ul>
 </header>
+<router-outlet></router-outlet>
