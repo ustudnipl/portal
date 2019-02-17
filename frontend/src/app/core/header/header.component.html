@@ -3,7 +3,9 @@
   <h5>28-dniowa modlitwa</h5>
   <h5>o dobrego współmałżonka</h5>
   <ul class="nav navbar-default">
-    <li *ngIf="appState.auth.authenticated"><a routerLink="/">Strona główna</a></li>
+    <li *ngIf="appState.auth.authenticated"><a routerLink="/">Mój profil</a></li>
+    <li *ngIf="appState.auth.authenticated"><a routerLink="/editions">Edycje modlitewne</a></li>
+    <li *ngIf="appState.auth.authenticated"><a routerLink="/messages">Wiadomości</a></li>
     <li *ngIf="!appState.auth.authenticated"><a routerLink="/signin">Logowanie</a></li>
     <li *ngIf="!appState.auth.authenticated"><a routerLink="/signup">Rejestracja</a></li>
   </ul>

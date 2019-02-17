@@ -1,0 +1,35 @@
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div>
+      <h2>Edycje modlitewne</h2>
+      <br/>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div *ngIf="editions == null">
+      <p>Ładowanie edycji...</p>
+    </div>
+    <div *ngIf="editions != null && editions.length != 0">
+      <ng-container *ngFor="let edition of editions">
+        <p class="text-center" *ngIf="edition.status == 'PENDING'">
+          <button type="button" class="btn btn-primary btn-lg disabled">{{edition.name}} (zapisy wkrótce)</button>
+        </p>
+        <p class="text-center" *ngIf="edition.status == 'ENROLLMENT'">
+          <button type="button" class="btn btn-primary btn-lg">{{edition.name}} - zapisy</button>
+        </p>
+        <p class="text-center" *ngIf="edition.status == 'MATCHING'">
+          <button type="button" class="btn btn-primary btn-lg disabled">{{edition.name}} (w toku)</button>
+        </p>
+        <p class="text-center" *ngIf="edition.status == 'EMAIL_SHARING'">
+          <button type="button" class="btn btn-primary btn-lg">{{edition.name}} - deklaracja email</button>
+        </p>
+        <p class="text-center" *ngIf="edition.status == 'EMAIL_SHARED'">
+          <button type="button" class="btn btn-primary btn-lg disabled">{{edition.name}} (zakończona)</button>
+        </p>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
