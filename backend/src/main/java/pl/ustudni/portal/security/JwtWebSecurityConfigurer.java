@@ -80,13 +80,19 @@ public class JwtWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        UserDetails user =
+        UserDetails user1 =
                 User.withDefaultPasswordEncoder()
                         .username("admin")
                         .password("password")
                         .roles("ADMIN")
                         .build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user2 =
+                User.withDefaultPasswordEncoder()
+                        .username("user")
+                        .password("password")
+                        .roles()
+                        .build();
+        return new InMemoryUserDetailsManager(user1, user2);
     }
 
 }
